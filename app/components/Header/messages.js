@@ -1,17 +1,17 @@
 /*
- * HomePage Messages
+ * XOXGame Messages
  *
- * This contains all the text for the HomePage component.
+ * This contains all the text for the XOXGame component.
  */
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  home: {
-    id: 'boilerplate.components.Header.home',
-    defaultMessage: 'Home',
+  game: {
+    id: 'boilerplate.components.Header.game',
+    defaultMessage: 'Game',
   },
-  features: {
-    id: 'boilerplate.components.Header.features',
-    defaultMessage: 'Features',
+  players: {
+    id: 'boilerplate.components.Header.players',
+    defaultMessage: 'Players',
   },
 });

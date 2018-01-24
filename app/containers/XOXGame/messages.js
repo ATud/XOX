@@ -6,8 +6,8 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  header: {
-    id: 'app.components.XOXGame.header',
-    defaultMessage: 'This is XOXGame component!',
+  startGame: {
+    id: 'boilerplate.containers.XOXGame.startGame',
+    defaultMessage: 'XOX Game',
   },
 });
