@@ -18,4 +18,8 @@ export default defineMessages({
     id: 'boilerplate.containers.XOXGame.resetGame',
     defaultMessage: 'Reset Game',
   },
+  undecided: {
+    id: 'boilerplate.containers.XOXGame.undecided',
+    defaultMessage: 'Undecided Game',
+  },
 });

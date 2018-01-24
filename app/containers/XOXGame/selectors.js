@@ -21,9 +21,15 @@ const getGameOverStatus = () => createSelector(
   (gameState) => gameState.get('gameOver')
 );
 
+const getUndecidedStatus = () => createSelector(
+  selectGame,
+  (gameState) => gameState.get('undecided')
+);
+
 export {
   selectGame,
   makeSelectGameState,
   getPlayer,
   getGameOverStatus,
+  getUndecidedStatus,
 };

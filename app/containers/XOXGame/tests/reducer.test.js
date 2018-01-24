@@ -9,6 +9,7 @@ describe('homeReducer', () => {
       gameState: Array(9).fill(null),
       nextPlayer: 'X',
       gameOver: false,
+      undecided: false,
     });
   });
 

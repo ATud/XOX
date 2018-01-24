@@ -12,4 +12,5 @@ export const GAME_SIZE = 3;
 export const UPDATE_GAMESTATE = 'Game/UPDATE_GAMESTATE';
 export const SET_NEXT_PLAYER = 'Game/SET_NEXT_PLAYER';
 export const SET_GAME_OVER = 'Game/SET_GAME_OVER';
+export const SET_UNDECIDED_STATUS = 'Game/SET_UNDECIDED_STATUS';
 export const RESET_GAME_STATE = 'Game/RESET_GAME_STATE';

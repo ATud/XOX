@@ -22,19 +22,19 @@ function Matrix(props) {
   return (
     <div>
       <div>
+        {constructCell(0)}
         {constructCell(1)}
         {constructCell(2)}
-        {constructCell(3)}
       </div>
       <div>
+        {constructCell(3)}
         {constructCell(4)}
         {constructCell(5)}
-        {constructCell(6)}
       </div>
       <div>
+        {constructCell(6)}
         {constructCell(7)}
         {constructCell(8)}
-        {constructCell(9)}
       </div>
     </div>
 

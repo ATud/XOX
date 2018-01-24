@@ -19,6 +19,7 @@ import {
   UPDATE_GAMESTATE,
   SET_NEXT_PLAYER,
   SET_GAME_OVER,
+  SET_UNDECIDED_STATUS,
   RESET_GAME_STATE,
 } from './constants';
 
@@ -46,6 +47,12 @@ export function setNextPlayer() {
 export function setGameOver() {
   return {
     type: SET_GAME_OVER,
+  };
+}
+
+export function setGameUndecided() {
+  return {
+    type: SET_UNDECIDED_STATUS,
   };
 }
 

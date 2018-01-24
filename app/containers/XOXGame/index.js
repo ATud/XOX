@@ -16,10 +16,10 @@ import { FormattedMessage } from 'react-intl';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import Matrix from 'components/Matrix';
-import { validateGame } from 'utils/gameValidation';
+import { validateGame, validateUndecided } from 'utils/gameValidation';
 import CenteredSection from './CenteredSection';
-import { makeSelectGameState, getPlayer, getGameOverStatus } from './selectors';
-import { setGameStatePosition, setNextPlayer, setGameOver, resetGameState } from './actions';
+import { makeSelectGameState, getPlayer, getGameOverStatus, getUndecidedStatus } from './selectors';
+import { setGameStatePosition, setNextPlayer, setGameOver, setGameUndecided, resetGameState } from './actions';
 
 import messages from './messages';
 import reducer from './reducer';
@@ -46,11 +46,22 @@ const ClickableSpan = styled.span`
     cursor: pointer;
 `;
 
+const LooserSpan = styled.span`
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.2em!important;
+    color: white;
+    background-color: black;
+`;
+
 export class XOXGame extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   componentDidUpdate() {
     const gameOver = validateGame(this.props.gameState);
+    const gameUndecided = validateUndecided(this.props.gameState);
     if (gameOver) {
       this.props.setGameOver();
+    } else if (gameUndecided) {
+      this.props.setGameUndecided();
     }
   }
 
@@ -71,6 +82,16 @@ export class XOXGame extends React.PureComponent { // eslint-disable-line react/
       <ClickableSpan onClick={this.props.resetGameState}>
         <FormattedMessage {...messages.resetGame} />
       </ClickableSpan>
+      <LooserSpan> =={this.props.player}== PLAYER LOST !!! TO BADD !!! </LooserSpan>
+    </GameOverDiv>
+  );
+
+  renderGameUndecided = () => (
+    <GameOverDiv>
+      <FormattedMessage {...messages.undecided} />
+      <ClickableSpan onClick={this.props.resetGameState}>
+        <FormattedMessage {...messages.resetGame} />
+      </ClickableSpan>
     </GameOverDiv>
   );
 
@@ -87,6 +108,7 @@ export class XOXGame extends React.PureComponent { // eslint-disable-line react/
             handleCellClick={this.handleCellClick}
           ></Matrix>
           {this.props.gameOver ? this.renderGameOverImage() : null}
+          {this.props.undecided ? this.renderGameUndecided() : null}
         </CenteredSection>
       </article>
     );
@@ -95,12 +117,14 @@ export class XOXGame extends React.PureComponent { // eslint-disable-line react/
 
 XOXGame.propTypes = {
   setGameStatePosition: PropTypes.func,
+  setGameUndecided: PropTypes.func,
   resetGameState: PropTypes.func,
   setGameOver: PropTypes.func,
   setNextPlayer: PropTypes.func,
   gameState: PropTypes.object,
   player: PropTypes.string,
   gameOver: PropTypes.bool,
+  undecided: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -109,11 +133,13 @@ export function mapDispatchToProps(dispatch) {
     setNextPlayer: () => dispatch(setNextPlayer()),
     setGameOver: () => dispatch(setGameOver()),
     resetGameState: () => dispatch(resetGameState()),
+    setGameUndecided: () => dispatch(setGameUndecided()),
   };
 }
 
 const mapStateToProps = createStructuredSelector({
   gameState: makeSelectGameState(),
+  undecided: getUndecidedStatus(),
   player: getPlayer(),
   gameOver: getGameOverStatus(),
 });

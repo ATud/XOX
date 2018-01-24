@@ -3,6 +3,7 @@
   "boilerplate.components.Header.players": "Players",
   "boilerplate.containers.XOXGame.xoxGame": "XOX Game",
   "boilerplate.containers.XOXGame.gameOver": "Game Over",
+  "boilerplate.containers.XOXGame.undecided": "Undecided Game",
   "boilerplate.containers.XOXGame.resetGame": "Click here to reset game",
   "boilerplate.containers.LocaleToggle.de": "de",
   "boilerplate.containers.LocaleToggle.en": "en",

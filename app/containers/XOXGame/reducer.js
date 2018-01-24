@@ -15,6 +15,7 @@ import {
   UPDATE_GAMESTATE,
   SET_NEXT_PLAYER,
   SET_GAME_OVER,
+  SET_UNDECIDED_STATUS,
   RESET_GAME_STATE,
 } from './constants';
 
@@ -22,16 +23,13 @@ const initialState = fromJS({
   gameState: Array(9).fill(null),
   nextPlayer: 'X',
   gameOver: false,
+  undecided: false,
 });
 
 function gameReducer(state = initialState, action) {
-  const immutableProps = fromJS({
-    gameState: Array(9).fill(null),
-    nextPlayer: 'X',
-    gameOver: false,
-  });
   switch (action.type) {
     case UPDATE_GAMESTATE:
+      console.log(action.index);
       return state
         .set('gameState', state.get('gameState').set(action.index, action.value));
     case SET_NEXT_PLAYER:
@@ -40,11 +38,15 @@ function gameReducer(state = initialState, action) {
     case SET_GAME_OVER:
       return state
         .set('gameOver', true);
+    case SET_UNDECIDED_STATUS:
+      return state
+        .set('undecided', true);
     case RESET_GAME_STATE:
       return state
-        .set('gameState', immutableProps.get('gameState'))
-        .set('nextPlayer', immutableProps.get('nextPlayer'))
-        .set('gameOver', immutableProps.get('gameOver'));
+        .set('gameState', initialState.get('gameState'))
+        .set('nextPlayer', initialState.get('nextPlayer'))
+        .set('undecided', initialState.get('gameOver'))
+        .set('gameOver', initialState.get('gameOver'));
     default:
       return state;
   }
