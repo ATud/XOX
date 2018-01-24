@@ -8,6 +8,7 @@ describe('homeReducer', () => {
     state = fromJS({
       gameState: Array(9).fill(null),
       nextPlayer: 'X',
+      gameOver: false,
     });
   });
 

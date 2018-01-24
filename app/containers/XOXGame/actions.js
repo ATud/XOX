@@ -18,6 +18,8 @@
 import {
   UPDATE_GAMESTATE,
   SET_NEXT_PLAYER,
+  SET_GAME_OVER,
+  RESET_GAME_STATE,
 } from './constants';
 
 /**
@@ -38,5 +40,17 @@ export function setGameStatePosition(index, value) {
 export function setNextPlayer() {
   return {
     type: SET_NEXT_PLAYER,
+  };
+}
+
+export function setGameOver() {
+  return {
+    type: SET_GAME_OVER,
+  };
+}
+
+export function resetGameState() {
+  return {
+    type: RESET_GAME_STATE,
   };
 }

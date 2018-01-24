@@ -16,8 +16,14 @@ const getPlayer = () => createSelector(
   (gameState) => gameState.get('nextPlayer')
 );
 
+const getGameOverStatus = () => createSelector(
+  selectGame,
+  (gameState) => gameState.get('gameOver')
+);
+
 export {
   selectGame,
   makeSelectGameState,
   getPlayer,
+  getGameOverStatus,
 };

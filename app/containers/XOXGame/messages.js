@@ -10,4 +10,12 @@ export default defineMessages({
     id: 'boilerplate.containers.XOXGame.startGame',
     defaultMessage: 'XOX Game',
   },
+  gameOver: {
+    id: 'boilerplate.containers.XOXGame.gameOver',
+    defaultMessage: 'GAME OVERRRRR',
+  },
+  resetGame: {
+    id: 'boilerplate.containers.XOXGame.resetGame',
+    defaultMessage: 'Reset Game',
+  },
 });

@@ -14,7 +14,7 @@ function Matrix(props) {
   const constructCell = (position) => (
     <Cell
       clickCell={props.handleCellClick}
-      value={props.gameState.get(position)}
+      value={props.gameState ? props.gameState.get(position) : null}
       position={position}
     />
   );

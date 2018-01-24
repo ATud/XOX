@@ -6,31 +6,73 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
 
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import Matrix from 'components/Matrix';
+import { validateGame } from 'utils/gameValidation';
 import CenteredSection from './CenteredSection';
-import { makeSelectGameState, getPlayer } from './selectors';
-import { setGameStatePosition, setNextPlayer } from './actions';
+import { makeSelectGameState, getPlayer, getGameOverStatus } from './selectors';
+import { setGameStatePosition, setNextPlayer, setGameOver, resetGameState } from './actions';
 
+import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
 
+const GameOverDiv = styled.div`
+  color: red;
+  position: absolute;
+  opacity: 0.6;
+  font-size: 6em;
+  @media (max-width: 480px) {
+    font-size: 3em;
+  }
+`;
+
+const ClickableSpan = styled.span`
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.5em!important;
+    color: black;
+    background-color: gray;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+`;
+
 export class XOXGame extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  componentDidUpdate() {
+    const gameOver = validateGame(this.props.gameState);
+    if (gameOver) {
+      this.props.setGameOver();
+    }
+  }
 
   handleCellClick = (index) => {
-    if (!this.props.gameState.get(index)) {
+    if (this.props.gameOver) {
+      alert('Game is already Over');
+    } else if (!this.props.gameState.get(index)) {
       this.props.setGameStatePosition(index, this.props.player);
       this.props.setNextPlayer();
     } else {
       alert('Already Played That');
     }
   }
+
+  renderGameOverImage = () => (
+    <GameOverDiv>
+      <FormattedMessage {...messages.gameOver} />
+      <ClickableSpan onClick={this.props.resetGameState}>
+        <FormattedMessage {...messages.resetGame} />
+      </ClickableSpan>
+    </GameOverDiv>
+  );
 
   render() {
     return (
@@ -44,6 +86,7 @@ export class XOXGame extends React.PureComponent { // eslint-disable-line react/
             gameState={this.props.gameState}
             handleCellClick={this.handleCellClick}
           ></Matrix>
+          {this.props.gameOver ? this.renderGameOverImage() : null}
         </CenteredSection>
       </article>
     );
@@ -52,21 +95,27 @@ export class XOXGame extends React.PureComponent { // eslint-disable-line react/
 
 XOXGame.propTypes = {
   setGameStatePosition: PropTypes.func,
+  resetGameState: PropTypes.func,
+  setGameOver: PropTypes.func,
   setNextPlayer: PropTypes.func,
   gameState: PropTypes.object,
   player: PropTypes.string,
+  gameOver: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     setGameStatePosition: (position, player) => dispatch(setGameStatePosition(position, player)),
     setNextPlayer: () => dispatch(setNextPlayer()),
+    setGameOver: () => dispatch(setGameOver()),
+    resetGameState: () => dispatch(resetGameState()),
   };
 }
 
 const mapStateToProps = createStructuredSelector({
   gameState: makeSelectGameState(),
   player: getPlayer(),
+  gameOver: getGameOverStatus(),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
